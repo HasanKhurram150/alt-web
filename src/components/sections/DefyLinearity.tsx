@@ -40,7 +40,7 @@ export default function DefyLinearity({}: Props) {
     },
     {
       title: "J.A.N.U.S",
-      body: "Janus is a tool that helps you keep track of your keys, wallet, and phone by using Bluetooth Low Energy (BLE) signals to determine their proximity to your phone.",
+      body: "A single, self-hosted Security & Networks Operations Center designed to monitor the entire IT/Security operational lifecycle.",
       logo: "/project-logos/janus-logo-white.svg",
       logoDark: "/project-logos/janus-logo-black.svg",
     },
