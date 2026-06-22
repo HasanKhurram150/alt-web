@@ -383,7 +383,7 @@ export default function ServicesPage() {
       {/* CTA Section */}
       <section className="py-16 md:py-20 px-6 max-w-5xl mx-auto text-center mt-8 md:mt-12">
         <FadeUp>
-          <div className="bg-accent/5 border-t border-b border-dashed border-accent/20 rounded-3xl p-8 md:p-12 relative overflow-hidden">
+          <div className="bg-accent/5 border-t border-b border-dashed border-accent/20  p-8 md:p-12 relative overflow-hidden">
             <h2 className="font-mono text-2xl md:text-3xl text-[var(--text-primary)] mb-3 leading-relaxed">
               Ready to build something great?
             </h2>

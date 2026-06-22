@@ -13,7 +13,7 @@ export const contactFormSchema = z.object({
   phone: z.string()
     .min(1, "Mobile number is required")
     .refine((val) => {
-      const cleanPhone = val.replace(/[^0-9]/g, "");
+      const cleanPhone = val.replace(/[^0-9+]/g, "");
       return cleanPhone.length >= 6;
     }, {
       message: "Please enter a valid mobile number",

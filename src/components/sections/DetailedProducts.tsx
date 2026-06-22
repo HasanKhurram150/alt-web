@@ -6,6 +6,19 @@ import { useTheme } from "@/context/ThemeContext";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {
+  IoLocationOutline,
+  IoTrendingUpOutline,
+  IoMapOutline,
+  IoEyeOutline,
+  IoWarningOutline,
+  IoBusinessOutline,
+  IoPulseOutline,
+  IoShieldHalfOutline,
+  IoLockClosedOutline,
+  IoCheckmarkCircleOutline,
+  IoPeopleOutline,
+} from "react-icons/io5";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,8 +54,7 @@ export default function DetailedProducts({}: Props) {
       systemId: "SYS-NEAR-VND-001",
       title: "NearVendor",
       logo: "/project-logos/near-vendor-logo.svg",
-      tagline:
-        "Bridge the physical-digital retail divide with real-time locality matching.",
+      tagline: "Hyper-local Search Engine",
       description:
         "A sophisticated hyper-local commerce engine utilizing real-time geospatial indexing, inventory synchronization networks, and AI-driven local search algorithms. It bridges physical retail stores with digital-first consumers, offering instantaneous product discovery, stock levels, and distance routing right in their hands.",
       url: "https://nearvendor.vercel.app/",
@@ -50,58 +62,80 @@ export default function DetailedProducts({}: Props) {
       // metricValue: "Sub-150ms",
       features: [
         {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-          ),
+          icon: <IoLocationOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
           title: "Nearby Product Matching",
           desc: " Finds the nearest available item you searched for.",
         },
         {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-              <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-              <line x1="12" y1="22.08" x2="12" y2="12" />
-            </svg>
-          ),
+          icon: <IoTrendingUpOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
           title: "Boosts Sales of Local vendors",
           desc: "Local Vendors that are not visisble to consumers gain visual attraction and sales boost.",
         },
         {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="3 11 22 2 13 21 11 13 3 11" />
-            </svg>
-          ),
+          icon: <IoMapOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
           title: "Interactive Route Mapping",
           desc: "Local distance vectors and interactive navigation for immediate pickup routes.",
+        },
+      ],
+    },
+
+    {
+      id: "mits",
+      badge: "ALPHA PRODUCT 03 // INTELLIGENT URBAN SECURITY",
+      systemId: "SYS-ALT-MTS-003",
+      title: "MITS",
+      logo: "/project-logos/mits-logo.svg",
+      tagline: "Multiple Identity Tracking System",
+      description:
+        "An industrial-grade, AI-powered security orchestrator designed to safeguard smart cities, residential estates, and complex multi-facility campuses. By utilizing advanced multi-camera visual telemetry, object classification, and instant anomaly warning systems, MITS delivers active threat prevention and perimeter security.",
+      url: "https://mits-seven.vercel.app/",
+      // metricLabel: "Edge Threat Inference",
+      // metricValue: "Sub-50ms",
+      features: [
+        {
+          icon: <IoEyeOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
+          title: "Neural Telemetry Engines",
+          desc: "Ultra-low latency camera stream parsing for real-time person, vehicle, and asset classification.",
+        },
+        {
+          icon: <IoWarningOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
+          title: "Instant Threat Detection",
+          desc: "Edge-computed anomaly detection triggering instant alerts for unauthorized entries.",
+        },
+        {
+          icon: <IoBusinessOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
+          title: "Active Estate Mapping",
+          desc: "Integrated 3D vector coordinates overlaying security events on facility maps.",
+        },
+      ],
+    },
+    {
+      id: "janus",
+      badge: "ALPHA PRODUCT 04 // INTELLIGENT URBAN SECURITY",
+      systemId: "SYS-ALT-MTS-003",
+      title: "J.A.N.U.S",
+      logo: "/project-logos/janus-logo-white.svg",
+      tagline: "Joint Analytics for Network & Unified Security",
+      description:
+        "A single, self-hosted Security & Networks Operations Center designed to monitor the entire IT/Security operational lifecycle.",
+      url: "#",
+      // metricLabel: "Edge Threat Inference",
+      // metricValue: "Sub-50ms",
+      features: [
+        {
+          icon: <IoPulseOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
+          title: "Network Operations (NOC)",
+          desc: "Real-time monitoring of network health, traffic, and performance metrics.",
+        },
+        {
+          icon: <IoShieldHalfOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
+          title: "Security Operations (SOC)",
+          desc: "Real-time monitoring of security threats, vulnerabilities, and incidents.",
+        },
+        {
+          icon: <IoLockClosedOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
+          title: "Network Access Control",
+          desc: "Enforces secure access policies, authenticates users and devices, and monitors network connections.",
         },
       ],
     },
@@ -119,132 +153,19 @@ export default function DetailedProducts({}: Props) {
       // metricValue: "100.0%",
       features: [
         {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-              <path d="m9 11 2 2 4-4" />
-            </svg>
-          ),
+          icon: <IoCheckmarkCircleOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
           title: "Verified NGO Network",
           desc: "Zero-compromise verification pipelines ensuring funds are channeled exclusively to accredited operations.",
         },
         {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-              <polyline points="16 7 22 7 22 13" />
-            </svg>
-          ),
+          icon: <IoTrendingUpOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
           title: "Milestone Tracking Engine",
           desc: "Visual, live-updating project goals showing donors exactly where every dollar goes.",
         },
         {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-              <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-            </svg>
-          ),
+          icon: <IoPeopleOutline className="w-6 h-6" stroke="url(#product-icon-grad)" />,
           title: "Community Grassroots Hub",
           desc: "User-generated fundraisers backed by local trust scores and automated auditing.",
-        },
-      ],
-    },
-    {
-      id: "mits",
-      badge: "ALPHA PRODUCT 03 // INTELLIGENT URBAN SECURITY",
-      systemId: "SYS-ALT-MTS-003",
-      title: "MITS",
-      logo: "/project-logos/mits-logo.svg",
-      tagline:
-        "Multi-camera visual telemetry and neural object classification safeguarding campuses.",
-      description:
-        "An industrial-grade, AI-powered security orchestrator designed to safeguard smart cities, residential estates, and complex multi-facility campuses. By utilizing advanced multi-camera visual telemetry, neural object classification, and instant anomaly warning systems, MITS delivers active threat prevention and perimeter security.",
-      url: "https://mits-seven.vercel.app/",
-      // metricLabel: "Edge Threat Inference",
-      // metricValue: "Sub-50ms",
-      features: [
-        {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-              <circle cx="12" cy="12" r="3" />
-            </svg>
-          ),
-          title: "Neural Telemetry Engines",
-          desc: "Ultra-low latency camera stream parsing for real-time person, vehicle, and asset classification.",
-        },
-        {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
-              <line x1="12" y1="9" x2="12" y2="13" />
-              <line x1="12" y1="17" x2="12.01" y2="17" />
-            </svg>
-          ),
-          title: "Instant Threat Detection",
-          desc: "Edge-computed anomaly detection triggering instant alerts for unauthorized entries.",
-        },
-        {
-          icon: (
-            <svg
-              className="w-6 h-6"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="url(#product-icon-grad)"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
-              <line x1="9" y1="3" x2="9" y2="18" />
-              <line x1="15" y1="6" x2="15" y2="21" />
-            </svg>
-          ),
-          title: "Active Estate Mapping",
-          desc: "Integrated 3D vector coordinates overlaying security events on facility maps.",
         },
       ],
     },
@@ -345,7 +266,7 @@ export default function DetailedProducts({}: Props) {
                     height={260}
                     className={`object-contain w-full max-w-[180px] md:max-w-[220px] lg:max-w-[260px] max-h-[260px] transition-all duration-700 hover:scale-105 ${
                       product.id === "mits" ? "dark:invert" : ""
-                    } ${product.id === "doneto" ? "invert dark:invert-0" : ""}`}
+                    } ${product.id === "doneto" ? "invert dark:invert-0" : ""} ${product.id === "janus" ? "invert dark:invert-0" : ""}`}
                   />
                 ) : (
                   <span className="font-mono text-7xl font-bold">
@@ -423,7 +344,7 @@ export default function DetailedProducts({}: Props) {
                 {product.features.map((feature, fIndex) => (
                   <div
                     key={fIndex}
-                    className="flex gap-4 p-4 rounded-2xl border border-[var(--border)]/10 bg-[var(--surface)]/30 hover:bg-[var(--surface)]/60 transition-colors duration-300"
+                    className="flex gap-4 p-4 rounded-2xl border border-[var(--border)]/10 bg-current/5 hover:bg-current/10 transition-colors duration-300"
                   >
                     <div className="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl bg-current/5 border border-current/10">
                       {feature.icon}

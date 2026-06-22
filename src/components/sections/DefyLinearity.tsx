@@ -25,16 +25,24 @@ export default function DefyLinearity({}: Props) {
       title: "NearVendor",
       body: "A product-first search engine that helps you find products in your locality, saving your time and energy when planning your next shopping spree.",
       logo: "/project-logos/near-vendor-logo.svg",
+      logoDark: "/project-logos/near-vendor-logo.svg",
     },
-    {
-      title: "Doneto",
-      body: "The go-to Donation Platform based around acclaimed NGO's and Local Goal Driven Fundraisers",
-      logo: "/assets/doneto white 2.png",
-    },
+    // {
+    //   title: "Doneto",
+    //   body: "The go-to Donation Platform based around acclaimed NGO's and Local Goal Driven Fundraisers",
+    //   logo: "/assets/doneto white 2.png",
+    // },
     {
       title: "MITS",
       body: "Multiple Identifciation Tracking System is an AI powered, State of the art security system, designed to safeguard socities and cities",
       logo: "/project-logos/mits-logo.svg",
+      logoDark: "/project-logos/mits-logo.svg",
+    },
+    {
+      title: "J.A.N.U.S",
+      body: "Janus is a tool that helps you keep track of your keys, wallet, and phone by using Bluetooth Low Energy (BLE) signals to determine their proximity to your phone.",
+      logo: "/project-logos/janus-logo-white.svg",
+      logoDark: "/project-logos/janus-logo-black.svg",
     },
   ];
 
@@ -116,7 +124,7 @@ export default function DefyLinearity({}: Props) {
                   userName={feature.title}
                   userRole={feature.body}
                   idNumber={`ALT-00${index + 1}`}
-                  logo={feature.logo}
+                  logo={theme === "light" ? feature.logo : feature.logoDark}
                 />
               </RotateAmplitude>
             </div>

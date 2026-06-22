@@ -117,10 +117,10 @@ export default function Footer({}: Props) {
                   Privacy Policy
                 </Link>
               </li>
-              <li className="relative flex items-center">
-                {/* Branch Line */}
+              {/* <li className="relative flex items-center">
+                {/* Branch Line 
                 <div className="absolute -left-[15px] top-1/2 -translate-y-1/2 w-[15px] h-[1px] bg-text-primary/20" />
-                {/* Node Dot */}
+                {/* Node Dot 
                 <div className="absolute -left-[18px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-text-primary/60" />
 
                 <Link
@@ -129,7 +129,7 @@ export default function Footer({}: Props) {
                 >
                   Terms of Service
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

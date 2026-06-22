@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useTheme } from "@/context/ThemeContext";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { IoAddOutline } from "react-icons/io5";
 
 interface Props {
   icon: ReactNode;
@@ -123,19 +124,7 @@ export default function ServiceCard({ icon, title, body }: Props) {
           }}
           className="w-12 h-12 flex items-center justify-center rounded-full border border-current bg-transparent transition-colors duration-500 cursor-pointer"
         >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
+          <IoAddOutline className="w-6 h-6" strokeWidth={2} />
         </button>
       </div>
 

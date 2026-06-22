@@ -11,9 +11,9 @@ import Threads from "@/components/ui/animated-components/threads/Threads";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Props { }
+interface Props {}
 
-export default function Hero({ }: Props) {
+export default function Hero({}: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();

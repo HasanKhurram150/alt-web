@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 
 import { useTheme } from "@/context/ThemeContext";
+import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 
 interface Props {}
 
@@ -95,33 +96,9 @@ export default function Navbar({}: Props) {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              <IoCloseOutline className="w-6 h-6" />
             ) : (
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                />
-              </svg>
+              <IoMenuOutline className="w-6 h-6" />
             )}
           </button>
         </div>
@@ -130,7 +107,7 @@ export default function Navbar({}: Props) {
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
         <div
-          className="absolute left-0 top-[92px] w-full h-[calc(100vh-92px)] backdrop-blur-xl z-50 flex flex-col items-center justify-start pt-20 gap-8 md:hidden transition-colors duration-300 overflow-y-auto"
+          className="absolute left-0 top-23 w-full h-[calc(100vh-92px)] backdrop-blur-xl z-50 flex flex-col items-center justify-start pt-20 gap-8 md:hidden transition-colors duration-300 overflow-y-auto"
           style={{ backgroundColor: "var(--bg)" }}
         >
           <Link
