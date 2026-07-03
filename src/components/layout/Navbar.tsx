@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
@@ -8,6 +8,8 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 
 import { useTheme } from "@/context/ThemeContext";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 interface Props {}
 
@@ -43,18 +45,36 @@ const NavDrawOutlineLink = ({
 export default function Navbar({}: Props) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
+  const headerRef = useRef<HTMLElement>(null);
 
   const logoSrc =
     theme === "light"
       ? "/assets/Vertical - Black 1.svg"
       : "/assets/Logo light theme.svg";
 
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set(headerRef.current, { opacity: 1, y: 0 });
+        return;
+      }
+
+      gsap.to(headerRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power4.out",
+        delay: 0.8, // Start entry after the logo is mostly appeared
+      });
+    },
+    { scope: headerRef }
+  );
+
   return (
     <header
-      className="sticky top-0 left-0 w-full z-50 backdrop-blur-xl border-b border-border transition-colors duration-300"
-      style={{
-        backgroundColor: "color-mix(in srgb, var(--bg) 80%, transparent)",
-      }}
+      ref={headerRef}
+      style={{ opacity: 0, transform: "translateY(-20px)" }}
+      className="absolute top-0 left-0 w-full z-50 bg-transparent transition-colors duration-300"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-[56px] h-[92px] flex items-center justify-between relative w-full">
         {/* Left: Logo */}
@@ -78,7 +98,8 @@ export default function Navbar({}: Props) {
 
         {/* Right: Theme Toggle + CTA */}
         <div className="flex items-center gap-4">
-          <ThemeToggle />
+          {/* DO NOT REMOVE
+          <ThemeToggle /> */}
           <div className="hidden md:block">
             <Button
               href="/contact"

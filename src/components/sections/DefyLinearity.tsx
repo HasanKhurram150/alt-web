@@ -82,7 +82,7 @@ export default function DefyLinearity({}: Props) {
   );
 
   return (
-    <section className="pt-12 pb-20 md:pt-20 md:pb-32 lg:pb-48 px-6 bg-bg/50">
+    <section className="pt-12 pb-20 md:pt-20 md:pb-32 lg:pb-48 px-6 bg-transparent">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="text-center mb-12">
           <h2

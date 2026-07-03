@@ -13,7 +13,7 @@ export default function Footer({}: Props) {
       ? "/assets/Vertical - Black 1.svg"
       : "/assets/Logo light theme.svg";
   return (
-    <footer className="bg-bg border-t border-border pt-16 md:pt-28 lg:pt-36 pb-8 px-6">
+    <footer className=" border-t border-border pt-16 md:pt-28 lg:pt-36 pb-8 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-16">
         {/* Col 1: Logo & Tagline */}
         <div>

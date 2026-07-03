@@ -35,6 +35,7 @@ body {
   --font-serif: var(--font-serif);
 
   --color-brand-blue: #003459;
+  /* #001f36 #002947 #003459 #00406b #004d7d #005990 */
   --color-brand-cream: #f1f0ea;
 
   /* Map standard variables to Tailwind colors */
@@ -231,3 +232,8 @@ body {
   position: relative;
   overflow-x: hidden;
 }
+
+.smooth-gradient {
+  background: linear-gradient(95deg, #001f36, #003459, #00406b);
+}
+/* #001f36 #002947 #003459 #00406b #004d7d #005990 */

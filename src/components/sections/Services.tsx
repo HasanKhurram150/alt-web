@@ -20,9 +20,9 @@ import {
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface Props { }
+interface Props {}
 
-export default function Services({ }: Props) {
+export default function Services({}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -95,11 +95,11 @@ export default function Services({ }: Props) {
         ease: "power3.out",
       });
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
-    <section className="py-16 md:py-32 lg:py-48 px-6 bg-bg">
+    <section className="py-16 md:py-32 lg:py-48 px-6 bg-transparent">
       <div className="max-w-7xl mx-auto">
         <div className="mb-20">
           <h2 className="font-mono font-bold text-3xl md:text-4xl text-[var(--text-primary)] leading-relaxed pb-2">
@@ -114,7 +114,9 @@ export default function Services({ }: Props) {
           {services.map((service, idx) => (
             <div
               key={idx}
-              ref={(el) => { cardsRef.current[idx] = el; }}
+              ref={(el) => {
+                cardsRef.current[idx] = el;
+              }}
             >
               <ServiceCard {...service} />
             </div>

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/ui/SmoothScroll";
+import FloatingLinesBackground from "@/components/ui/animated-components/floating-lines/FloatingLinesBackground";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -47,11 +48,19 @@ export default function RootLayout({
     >
       <body className="bg-[var(--bg)] text-[var(--text-primary)] font-body transition-colors duration-300">
         <ThemeProvider>
-          <SmoothScroll>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </SmoothScroll>
+          {/* Global Sticky/Fixed Background Layer */}
+          <div className="fixed inset-0 z-0 pointer-events-none w-full h-screen overflow-hidden">
+            <FloatingLinesBackground />
+          </div>
+          
+          {/* Main Content Wrapper */}
+          <div className="relative z-10">
+            <SmoothScroll>
+              <Navbar />
+              <main>{children}</main>
+              <Footer />
+            </SmoothScroll>
+          </div>
         </ThemeProvider>
       </body>
     </html>
