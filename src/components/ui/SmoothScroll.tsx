@@ -2,7 +2,7 @@
 
 import { ReactLenis } from "lenis/react";
 import gsap from "gsap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLenis } from "@/hooks/use-lenis";
 
 interface Props {
@@ -13,11 +13,11 @@ interface Props {
  * Syncs Lenis with GSAP Ticker
  * This must be a child of ReactLenis to use the useLenis hook
  */
-function LenisGSAPSync() {
+function LenisGSAPSync({ isMobile }: { isMobile: boolean }) {
   const lenis = useLenis();
 
   useEffect(() => {
-    if (!lenis) return;
+    if (!lenis || isMobile) return;
 
     // Rule 4: Sync with GSAP using gsap.ticker
     // We use manual raf control for better synchronization with GSAP animations
@@ -27,32 +27,47 @@ function LenisGSAPSync() {
 
     gsap.ticker.add(update);
     return () => gsap.ticker.remove(update);
-  }, [lenis]);
+  }, [lenis, isMobile]);
 
   return null;
 }
 
 export default function SmoothScroll({ children }: Props) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      // strictly check viewport width; touch-screen laptops are desktops
+      const mobile = window.matchMedia("(max-width: 768px)").matches;
+      setIsMobile(mobile);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <ReactLenis
       root
-      autoRaf={false}
+      autoRaf={isMobile} // Let it handle own raf (doing nothing when duration is 0) or manually tick.
       options={{
-        duration: 1.6,
+        duration: isMobile ? 0 : 1.6,
         easing: (t) => 1 - Math.pow(1 - t, 5), // Premium easeOutQuint deceleration drift
         orientation: "vertical",
         gestureOrientation: "vertical",
-        smoothWheel: true,
+        smoothWheel: !isMobile, // Disable wheel smoothing on mobile
         wheelMultiplier: 0.9, // Adds deliberate, tactile weight to mouse notches
         // syncTouch: false prevents mousepad (trackpad) issues on Windows/Chrome
         syncTouch: false,
         touchMultiplier: 1.5,
       }}
     >
-      <LenisGSAPSync />
+      <LenisGSAPSync isMobile={isMobile} />
       {children}
     </ReactLenis>
   );
 }
+
 
 

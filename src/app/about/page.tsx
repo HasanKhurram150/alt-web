@@ -56,7 +56,7 @@ export default function AboutPage({}: Props) {
       </section>
 
       {/* Mission & Values Section */}
-      <section className="py-16 md:py-24 lg:py-36 px-6 dark:bg-[var(--surface)]/50 border-t border-b border-[var(--border)]/15">
+      <section className="py-16 md:py-24 lg:py-36 px-6  border-t border-b border-[var(--border)]/15">
         <div className="max-w-7xl mx-auto flex flex-col gap-20 md:gap-32">
           {/* Mission */}
           <FadeUp>
@@ -118,7 +118,7 @@ export default function AboutPage({}: Props) {
       </section>
 
       {/* Parent Organization Section */}
-      <section className="py-16 md:py-24 lg:py-36 px-6 dark:bg-[var(--surface)]/30 border-t border-b border-[var(--border)]/15">
+      <section className="py-16 md:py-24 lg:py-36 px-6 border-t border-b border-[var(--border)]/15">
         <div className="max-w-7xl mx-auto">
           <div className="mb-16 md:mb-24 flex flex-col gap-12 lg:gap-16">
             {/* Top: Logo and Title */}

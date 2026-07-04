@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "@/context/ThemeContext";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,6 +17,28 @@ export default function Hero({}: Props) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subheadingRef = useRef<HTMLHeadingElement>(null);
   const { theme } = useTheme();
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+
+  useEffect(() => {
+    if (document.body.classList.contains("page-loaded")) {
+      setIsPageLoaded(true);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      if (document.body.classList.contains("page-loaded")) {
+        setIsPageLoaded(true);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const logoSrc =
     theme === "light"
@@ -26,6 +48,8 @@ export default function Hero({}: Props) {
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
+
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         gsap.set([logoRef.current, headingRef.current, subheadingRef.current], {
           opacity: 1,
@@ -54,7 +78,7 @@ export default function Hero({}: Props) {
         y: 0,
         duration: 1.2,
         ease: "power3.out",
-        delay: 0.2, // Tiny initial delay
+        delay: 0.1, // Small delay after loader exits
       })
         .to(
           headingRef.current,
@@ -77,7 +101,7 @@ export default function Hero({}: Props) {
           "-=0.7" // Staggered start relative to heading
         );
     },
-    { scope: sectionRef },
+    { dependencies: [isPageLoaded], scope: sectionRef },
   );
 
   return (

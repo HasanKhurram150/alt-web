@@ -221,6 +221,7 @@ type WavePosition = {
 
 type FloatingLinesProps = {
   linesGradient?: string[];
+  loaderGradient?: string[];
   enabledWaves?: Array<"top" | "middle" | "bottom">;
   lineCount?: number | number[];
   lineDistance?: number | number[];
@@ -263,6 +264,7 @@ function hexToVec3(hex: string): Vector3 {
 
 export default function FloatingLines({
   linesGradient,
+  loaderGradient,
   enabledWaves = ["top", "middle", "bottom"],
   lineCount = [6],
   lineDistance = [5],
@@ -378,8 +380,9 @@ export default function FloatingLines({
       lineGradientCount: { value: 0 },
     };
 
-    if (linesGradient && linesGradient.length > 0) {
-      const stops = linesGradient.slice(0, MAX_GRADIENT_STOPS);
+    const initialGradient = loaderGradient || linesGradient;
+    if (initialGradient && initialGradient.length > 0) {
+      const stops = initialGradient.slice(0, MAX_GRADIENT_STOPS);
       uniforms.lineGradientCount.value = stops.length;
 
       stops.forEach((hex, i) => {
@@ -453,6 +456,11 @@ export default function FloatingLines({
       renderer.domElement.addEventListener("pointerleave", handlePointerLeave);
     }
 
+    const currentProgressRef = { current: 0.0 };
+    const targetProgressRef = { current: 0.0 };
+    const startColors = (loaderGradient || linesGradient || []).map(hexToVec3);
+    const endColors = (linesGradient || []).map(hexToVec3);
+
     let raf = 0;
     const renderLoop = () => {
       if (!active) return;
@@ -470,6 +478,40 @@ export default function FloatingLines({
       if (parallax) {
         currentParallaxRef.current.lerp(targetParallaxRef.current, mouseDamping);
         uniforms.parallaxOffset.value.copy(currentParallaxRef.current);
+      }
+
+      // Interpolate gradient colors based on page load state
+      const isBodyLoaded = document.body.classList.contains("page-loaded");
+      targetProgressRef.current = isBodyLoaded ? 1.0 : 0.0;
+
+      if (Math.abs(currentProgressRef.current - targetProgressRef.current) > 0.001) {
+        currentProgressRef.current += (targetProgressRef.current - currentProgressRef.current) * 0.02; // Smooth ~1s transition
+        const progress = currentProgressRef.current;
+
+        const stopsCount = Math.min(startColors.length, endColors.length, MAX_GRADIENT_STOPS);
+        for (let i = 0; i < stopsCount; i++) {
+          const startColor = startColors[i];
+          const endColor = endColors[i];
+
+          const r = startColor.x + (endColor.x - startColor.x) * progress;
+          const g = startColor.y + (endColor.y - startColor.y) * progress;
+          const b = startColor.z + (endColor.z - startColor.z) * progress;
+
+          uniforms.lineGradient.value[i].set(r, g, b);
+        }
+      } else {
+        const progress = targetProgressRef.current;
+        const stopsCount = Math.min(startColors.length, endColors.length, MAX_GRADIENT_STOPS);
+        for (let i = 0; i < stopsCount; i++) {
+          const startColor = startColors[i];
+          const endColor = endColors[i];
+
+          const r = startColor.x + (endColor.x - startColor.x) * progress;
+          const g = startColor.y + (endColor.y - startColor.y) * progress;
+          const b = startColor.z + (endColor.z - startColor.z) * progress;
+
+          uniforms.lineGradient.value[i].set(r, g, b);
+        }
       }
 
       renderer.render(scene, camera);
@@ -499,6 +541,7 @@ export default function FloatingLines({
     };
   }, [
     linesGradient,
+    loaderGradient,
     enabledWaves,
     lineCount,
     lineDistance,

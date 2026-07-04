@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
@@ -46,6 +46,28 @@ export default function Navbar({}: Props) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
   const headerRef = useRef<HTMLElement>(null);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+
+  useEffect(() => {
+    if (document.body.classList.contains("page-loaded")) {
+      setIsPageLoaded(true);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      if (document.body.classList.contains("page-loaded")) {
+        setIsPageLoaded(true);
+        observer.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   const logoSrc =
     theme === "light"
@@ -54,6 +76,8 @@ export default function Navbar({}: Props) {
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
+
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         gsap.set(headerRef.current, { opacity: 1, y: 0 });
         return;
@@ -64,17 +88,85 @@ export default function Navbar({}: Props) {
         y: 0,
         duration: 1.2,
         ease: "power4.out",
-        delay: 0.8, // Start entry after the logo is mostly appeared
+        delay: 0.2, // Trigger quickly once page is loaded
       });
     },
-    { scope: headerRef }
+    { dependencies: [isPageLoaded], scope: headerRef }
+  );
+
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const linksRef = useRef<HTMLDivElement>(null);
+
+  // Lock scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
+  useGSAP(
+    () => {
+      if (!mobileMenuRef.current) return;
+
+      if (isMobileMenuOpen) {
+        // Fade & slide down menu container
+        gsap.to(mobileMenuRef.current, {
+          opacity: 1,
+          y: 0,
+          pointerEvents: "auto",
+          duration: 0.5,
+          ease: "power3.out",
+        });
+
+        // Stagger list links cascading in
+        if (linksRef.current) {
+          gsap.fromTo(
+            linksRef.current.children,
+            { opacity: 0, y: 20 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.55,
+              stagger: 0.08,
+              ease: "power2.out",
+              delay: 0.1,
+            }
+          );
+        }
+      } else {
+        // Fade & slide up menu container out
+        gsap.to(mobileMenuRef.current, {
+          opacity: 0,
+          y: -30,
+          pointerEvents: "none",
+          duration: 0.4,
+          ease: "power3.inOut",
+        });
+      }
+    },
+    { dependencies: [isMobileMenuOpen], scope: mobileMenuRef }
   );
 
   return (
     <header
       ref={headerRef}
-      style={{ opacity: 0, transform: "translateY(-20px)" }}
-      className="absolute top-0 left-0 w-full z-50 bg-transparent transition-colors duration-300"
+      style={{
+        opacity: 0,
+        transform: "translateY(-20px)",
+        backgroundColor: isMobileMenuOpen
+          ? theme === "dark"
+            ? "#001f35"
+            : "#f1f0ea"
+          : "transparent",
+      }}
+      className={`${
+        isMobileMenuOpen ? "fixed" : "absolute"
+      } top-0 left-0 w-full z-50 transition-colors duration-300`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-[56px] h-[92px] flex items-center justify-between relative w-full">
         {/* Left: Logo */}
@@ -111,57 +203,85 @@ export default function Navbar({}: Props) {
             </Button>
           </div>
 
-          {/* Mobile Menu Toggle */}
+          {/* Mobile Menu Toggle (Smooth Morphing Icon) */}
           <button
-            className="md:hidden p-2 text-[var(--text-primary)]"
+            className="md:hidden flex flex-col justify-center items-center w-10 h-10 relative z-50 focus:outline-none"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle Menu"
           >
-            {isMobileMenuOpen ? (
-              <IoCloseOutline className="w-6 h-6" />
-            ) : (
-              <IoMenuOutline className="w-6 h-6" />
-            )}
+            <div className="relative w-6 h-4 flex flex-col justify-between">
+              <span
+                className={`block w-full h-[2px] bg-[var(--text-primary)] rounded-full transition-all duration-300 ${
+                  isMobileMenuOpen ? "rotate-45 translate-y-[7px]" : ""
+                }`}
+              />
+              <span
+                className={`block w-full h-[2px] bg-[var(--text-primary)] rounded-full transition-all duration-200 ${
+                  isMobileMenuOpen ? "opacity-0" : ""
+                }`}
+              />
+              <span
+                className={`block w-full h-[2px] bg-[var(--text-primary)] rounded-full transition-all duration-300 ${
+                  isMobileMenuOpen ? "-rotate-45 -translate-y-[7px]" : ""
+                }`}
+              />
+            </div>
           </button>
         </div>
       </div>
 
       {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
+      <div
+        ref={mobileMenuRef}
+        style={{
+          opacity: 0,
+          transform: "translateY(-30px)",
+          pointerEvents: "none",
+          background:
+            theme === "dark"
+              ? "linear-gradient(to bottom, #001f35, #000c14)"
+              : "linear-gradient(to bottom, #f1f0ea, #e2e0d5)",
+        }}
+        className="fixed top-[92px] left-0 w-full h-[calc(100vh-92px)] z-40 flex flex-col md:hidden border-t border-[var(--border)]"
+      >
+        {/* Nav Links Column */}
         <div
-          className="absolute left-0 top-23 w-full h-[calc(100vh-92px)] backdrop-blur-xl z-50 flex flex-col items-center justify-start pt-20 gap-8 md:hidden transition-colors duration-300 overflow-y-auto"
-          style={{ backgroundColor: "var(--bg)" }}
+          ref={linksRef}
+          className="flex-1 flex flex-col items-center justify-center gap-8 pb-24"
         >
           <Link
             href="/services"
-            className="text-4xl font-display font-bold text-text-primary"
+            className="text-4xl font-mono text-text-primary"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Services
           </Link>
           <Link
             href="/products"
-            className="text-4xl font-display font-bold text-text-primary"
+            className="text-4xl font-mono text-text-primary"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Products
           </Link>
           <Link
             href="/about"
-            className="text-4xl font-display font-bold text-text-primary"
+            className="text-4xl font-mono text-text-primary"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             About
           </Link>
-          <Button
-            href="/contact"
-            variant="outline"
-            className="w-full max-w-[200px] font-body normal-case tracking-normal"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Get Started Today
-          </Button>
+          <div className="w-full flex justify-center">
+            <Button
+              href="/contact"
+              variant="outline"
+              className="w-full max-w-[200px] font-body normal-case tracking-normal mt-4"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Get Started Today
+            </Button>
+          </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

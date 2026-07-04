@@ -7,6 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 import FloatingLinesBackground from "@/components/ui/animated-components/floating-lines/FloatingLinesBackground";
+import PageLoader from "@/components/ui/PageLoader";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -53,14 +54,16 @@ export default function RootLayout({
             <FloatingLinesBackground />
           </div>
           
-          {/* Main Content Wrapper */}
-          <div className="relative z-10">
-            <SmoothScroll>
-              <Navbar />
-              <main>{children}</main>
-              <Footer />
-            </SmoothScroll>
-          </div>
+          {/* Main Content Wrapper wrapped in PageLoader */}
+          <PageLoader>
+            <div className="relative z-10">
+              <SmoothScroll>
+                <Navbar />
+                <main>{children}</main>
+                <Footer />
+              </SmoothScroll>
+            </div>
+          </PageLoader>
         </ThemeProvider>
       </body>
     </html>

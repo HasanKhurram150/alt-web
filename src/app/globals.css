@@ -218,6 +218,14 @@ html {
   width: 100%;
   /* Crucial for mousepad/trackpad gesture support on some browsers */
   touch-action: pan-y;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbars globally */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -237,3 +245,14 @@ body {
   background: linear-gradient(95deg, #001f36, #003459, #00406b);
 }
 /* #001f36 #002947 #003459 #00406b #004d7d #005990 */
+
+/* Scroll lock and inverted light scheme during initial loader display */
+body.page-loading {
+  overflow: hidden !important;
+  background-color: #f1f0ea !important;
+  color: #003459 !important;
+}
+
+body.page-loaded {
+  transition: background-color 1.2s cubic-bezier(0.4, 0, 0.2, 1), color 1.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}

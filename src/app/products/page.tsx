@@ -5,7 +5,7 @@ interface Props {}
 
 export default function ProductsPage({}: Props) {
   return (
-    <div className="min-h-screen pt-32 px-6 lg:px-8 bg-bg">
+    <div className="min-h-screen pt-32 px-6 lg:px-8 bg-transparent">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="max-w-3xl mb-20 md:mb-28">
@@ -21,7 +21,10 @@ export default function ProductsPage({}: Props) {
           </FadeUp>
           <FadeUp delay={0.2}>
             <p className="font-serif text-[var(--text-secondary)] text-xl md:text-2xl leading-relaxed">
-              Our proprietary platforms are engineered to solve critical operational, geospatial, and safety challenges. Built on modular frameworks, they offer ultimate scalability across diverse industries and local ecosystems.
+              Our proprietary platforms are engineered to solve critical
+              operational, geospatial, and safety challenges. Built on modular
+              frameworks, they offer ultimate scalability across diverse
+              industries and local ecosystems.
             </p>
           </FadeUp>
         </div>

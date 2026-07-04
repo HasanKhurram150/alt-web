@@ -20,6 +20,8 @@ export default function FloatingLinesBackground() {
           ? ["#001f36", "#002947", "#003459", "#005990"]
           : ["#f1f0ea", "#daf4ff", "#005990", "#003459"]
       }
+      // loaderGradient={["#002947", "#003459", "#005990", "#0088cc"]}
+      loaderGradient={["#002947", "#daf4ff", "#005990", "#003459"]}
     />
   );
 }

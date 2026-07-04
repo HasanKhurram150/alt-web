@@ -228,7 +228,17 @@ export default function DetailedProducts({}: Props) {
       className="w-full flex flex-col gap-16 md:gap-24 lg:gap-32 pb-20 md:pb-32 "
     >
       {/* Reusable Icon Gradient Definition matching brand styles */}
-      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+      <svg
+        style={{
+          position: "absolute",
+          width: "1px",
+          height: "1px",
+          overflow: "hidden",
+          opacity: 0,
+          pointerEvents: "none",
+        }}
+        aria-hidden="true"
+      >
         <defs>
           <linearGradient
             id="product-icon-grad"
