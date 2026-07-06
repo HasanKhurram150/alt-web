@@ -41,7 +41,7 @@ export default function AboutPage({}: Props) {
           <FadeUp delay={0.3}>
             <div className="mt-10">
               <a
-                href="/assets/company_document-flatten.pdf"
+                href="/assets/ALT_Profile.pdf"
                 download
                 target="_blank"
                 rel="noopener noreferrer"
