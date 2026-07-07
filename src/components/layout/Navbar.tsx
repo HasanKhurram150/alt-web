@@ -10,6 +10,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 
 interface Props {}
 
@@ -46,28 +47,7 @@ export default function Navbar({}: Props) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
   const headerRef = useRef<HTMLElement>(null);
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
-
-  useEffect(() => {
-    if (document.body.classList.contains("page-loaded")) {
-      setIsPageLoaded(true);
-      return;
-    }
-
-    const observer = new MutationObserver(() => {
-      if (document.body.classList.contains("page-loaded")) {
-        setIsPageLoaded(true);
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const isPageLoaded = usePageLoaded();
 
   const logoSrc =
     theme === "light"

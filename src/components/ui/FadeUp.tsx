@@ -4,6 +4,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,9 +25,12 @@ export default function FadeUp({
   className = "",
 }: Props) {
   const container = useRef<HTMLDivElement>(null);
+  const isPageLoaded = usePageLoaded();
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
+
       // Rule 3: Always check prefers-reduced-motion
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -43,11 +47,18 @@ export default function FadeUp({
         ease: "power3.out",
       });
     },
-    { scope: container }
+    { dependencies: [isPageLoaded], scope: container }
   );
 
   return (
-    <div ref={container} className={className}>
+    <div
+      ref={container}
+      className={className}
+      style={{
+        opacity: isPageLoaded ? undefined : 0,
+        transform: isPageLoaded ? undefined : `translateY(${y}px)`,
+      }}
+    >
       {children}
     </div>
   );

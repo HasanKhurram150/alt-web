@@ -147,7 +147,7 @@ export default function AboutPage({}: Props) {
             {/* Bottom: Detailed descriptions */}
             <div className="w-full flex flex-col gap-8 lg:mt-8">
               <FadeUp delay={0.1}>
-                <p className="font-serif text-[var(--text-secondary)] text-base md:text-lg leading-relaxed">
+                <p className="font-serif text-white text-base md:text-lg leading-relaxed">
                   Reliance Corporation (Pvt.) Ltd. is a dynamic and
                   forward-thinking organization with a strong presence across
                   international markets, supported by its sister concerns
@@ -162,7 +162,7 @@ export default function AboutPage({}: Props) {
                 </p>
               </FadeUp>
               <FadeUp delay={0.2}>
-                <p className="font-serif text-[var(--text-secondary)] text-base md:text-lg leading-relaxed">
+                <p className="font-serif text-white text-base md:text-lg leading-relaxed">
                   Building upon this foundation, the Group delivers cutting-edge
                   technology solutions across a wide spectrum of sectors,
                   including Robotics & Smart Machines, Artificial Intelligence,
@@ -182,7 +182,7 @@ export default function AboutPage({}: Props) {
                   <h4 className="font-mono text-sm uppercase tracking-widest text-[var(--text-primary)] mb-3 font-semibold">
                     Mission
                   </h4>
-                  <p className="font-serif text-[var(--text-muted)] text-sm leading-relaxed">
+                  <p className="font-serif text-white text-sm leading-relaxed">
                     Our mission is to empower organizations and governments with
                     advanced technological solutions that enhance security,
                     efficiency, and productivity.
@@ -192,7 +192,7 @@ export default function AboutPage({}: Props) {
                   <h4 className="font-mono text-sm uppercase tracking-widest text-[var(--text-primary)] mb-3 font-semibold">
                     Dedication
                   </h4>
-                  <p className="font-serif text-[var(--text-muted)] text-sm leading-relaxed">
+                  <p className="font-serif text-white text-sm leading-relaxed">
                     Bridging global innovation and mission-critical needs, we
                     empower government and local partners through strategic
                     oversight and technical expertise to maximize technological
@@ -203,7 +203,7 @@ export default function AboutPage({}: Props) {
                   <h4 className="font-mono text-sm uppercase tracking-widest text-[var(--text-primary)] mb-3 font-semibold">
                     Vision
                   </h4>
-                  <p className="font-serif text-[var(--text-muted)] text-sm leading-relaxed">
+                  <p className="font-serif text-white text-sm leading-relaxed">
                     To be recognized as a global leader in technology and
                     security solutions, setting the standard for excellence and
                     innovation in every facet of our business.

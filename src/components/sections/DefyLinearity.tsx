@@ -7,18 +7,19 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useTheme } from "@/context/ThemeContext";
 import RotateAmplitude from "@/components/animations/RotateAmplitude";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface Props {}
 
 export default function DefyLinearity({}: Props) {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const { theme } = useTheme();
+  const isPageLoaded = usePageLoaded();
+  const isDark = theme === "dark";
 
   const features = [
     {
@@ -48,6 +49,8 @@ export default function DefyLinearity({}: Props) {
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
+
       // Rule 3: Always check prefers-reduced-motion
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -78,11 +81,14 @@ export default function DefyLinearity({}: Props) {
         ease: "power3.out",
       });
     },
-    { scope: containerRef },
+    { dependencies: [isPageLoaded], scope: containerRef },
   );
 
   return (
-    <section className="pt-12 pb-20 md:pt-20 md:pb-32 lg:pb-48 px-6 bg-transparent">
+    <section
+      className="pt-12 pb-20 md:pt-20 md:pb-32 lg:pb-48 px-6 bg-transparent"
+      style={{ opacity: isPageLoaded ? undefined : 0 }}
+    >
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         <div className="text-center mb-12">
           <h2

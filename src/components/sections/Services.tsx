@@ -5,6 +5,7 @@ import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 import {
   IoCloudUploadOutline,
   IoServerOutline,
@@ -25,6 +26,7 @@ interface Props {}
 export default function Services({}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const isPageLoaded = usePageLoaded();
 
   const services = [
     {
@@ -81,6 +83,7 @@ export default function Services({}: Props) {
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       gsap.from(cardsRef.current, {
@@ -95,11 +98,14 @@ export default function Services({}: Props) {
         ease: "power3.out",
       });
     },
-    { scope: containerRef },
+    { dependencies: [isPageLoaded], scope: containerRef },
   );
 
   return (
-    <section className="py-16 md:py-32 lg:py-48 px-6 bg-transparent">
+    <section
+      className="py-16 md:py-32 lg:py-48 px-6 bg-transparent"
+      style={{ opacity: isPageLoaded ? undefined : 0 }}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="mb-20">
           <h2 className="font-mono font-bold text-3xl md:text-4xl text-[var(--text-primary)] leading-relaxed pb-2">

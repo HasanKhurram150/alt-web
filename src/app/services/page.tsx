@@ -20,6 +20,7 @@ import ServiceCard from "@/components/ui/ServiceCard";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 
 // Register ScrollTrigger plugin
 gsap.registerPlugin(ScrollTrigger);
@@ -89,9 +90,12 @@ export default function ServicesPage() {
   const desktopActiveLineRef = useRef<HTMLDivElement>(null);
   const mobileLineRef = useRef<HTMLDivElement>(null);
   const mobileActiveLineRef = useRef<HTMLDivElement>(null);
+  const isPageLoaded = usePageLoaded();
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
+
       // Rule 21: Check prefers-reduced-motion
       const isReducedMotion = window.matchMedia(
         "(prefers-reduced-motion: reduce)",
@@ -253,7 +257,7 @@ export default function ServicesPage() {
 
       return () => mm.revert();
     },
-    { scope: containerRef },
+    { dependencies: [isPageLoaded], scope: containerRef },
   );
 
   return (
@@ -273,7 +277,11 @@ export default function ServicesPage() {
       </section>
 
       {/* Timeline Section */}
-      <section ref={containerRef} className="max-w-7xl mx-auto px-6 relative">
+      <section
+        ref={containerRef}
+        className="max-w-7xl mx-auto px-6 relative"
+        style={{ opacity: isPageLoaded ? undefined : 0 }}
+      >
         {/* 1. Central Single Linked Trunk Line (Desktop) */}
         <div
           ref={desktopLineRef}

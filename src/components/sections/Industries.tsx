@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 import "./Industries.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Industries() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isPageLoaded = usePageLoaded();
 
   const industries = [
     {
@@ -448,6 +450,8 @@ export default function Industries() {
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
+
       // Rule 3: Always check prefers-reduced-motion
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -481,11 +485,14 @@ export default function Industries() {
 
       return () => mm.revert();
     },
-    { scope: containerRef },
+    { dependencies: [isPageLoaded], scope: containerRef },
   );
 
   return (
-    <section className="industries-section relative bg-transparent border-t border-border/30 overflow-hidden">
+    <section
+      className="industries-section relative bg-transparent border-t border-border/30 overflow-hidden"
+      style={{ opacity: isPageLoaded ? undefined : 0 }}
+    >
       {/* Decorative background glow elements */}
       <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 rounded-full bg-accent-glow blur-[120px] pointer-events-none opacity-40" />
       <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-96 h-96 rounded-full bg-accent-glow blur-[120px] pointer-events-none opacity-40" />

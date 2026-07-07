@@ -1,10 +1,11 @@
 "use client";
 
 import { useTheme } from "@/context/ThemeContext";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,28 +18,7 @@ export default function Hero({}: Props) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const subheadingRef = useRef<HTMLHeadingElement>(null);
   const { theme } = useTheme();
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
-
-  useEffect(() => {
-    if (document.body.classList.contains("page-loaded")) {
-      setIsPageLoaded(true);
-      return;
-    }
-
-    const observer = new MutationObserver(() => {
-      if (document.body.classList.contains("page-loaded")) {
-        setIsPageLoaded(true);
-        observer.disconnect();
-      }
-    });
-
-    observer.observe(document.body, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const isPageLoaded = usePageLoaded();
 
   const logoSrc =
     theme === "light"

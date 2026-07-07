@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -116,9 +117,11 @@ export default function HorizontalShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [mainAnim, setMainAnim] = useState<gsap.core.Animation | null>(null);
+  const isPageLoaded = usePageLoaded();
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
       const track = trackRef.current;
@@ -156,13 +159,14 @@ export default function HorizontalShowcase() {
         anim.scrollTrigger?.kill();
       };
     },
-    { scope: sectionRef },
+    { dependencies: [isPageLoaded], scope: sectionRef },
   );
 
   return (
     <section
       ref={sectionRef}
       className="relative bg-[#001f35] overflow-hidden py-20"
+      style={{ opacity: isPageLoaded ? undefined : 0 }}
     >
       <div
         ref={containerRef}

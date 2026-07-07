@@ -9,11 +9,11 @@ export default function ProductsPage({}: Props) {
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="max-w-3xl mb-20 md:mb-28">
-          <FadeUp>
+          {/* <FadeUp>
             <span className="font-mono text-xs font-semibold tracking-[0.25em] text-[#f1f0ea] uppercase">
               // ALT PROPRIETARY SYSTEMS
             </span>
-          </FadeUp>
+          </FadeUp> */}
           <FadeUp delay={0.1}>
             <h1 className="font-mono font-bold text-5xl md:text-6xl text-[var(--text-primary)] mt-4 mb-6 leading-[1.1]">
               Our Products

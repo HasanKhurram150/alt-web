@@ -17,16 +17,45 @@ function LenisGSAPSync({ isMobile }: { isMobile: boolean }) {
   const lenis = useLenis();
 
   useEffect(() => {
-    if (!lenis || isMobile) return;
+    if (!lenis) return;
 
-    // Rule 4: Sync with GSAP using gsap.ticker
-    // We use manual raf control for better synchronization with GSAP animations
-    const update = (time: number) => {
-      lenis.raf(time * 1000);
+    // Initial check
+    if (document.body.classList.contains("page-loading")) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+
+    // Setup mutation observer on document.body for class changes
+    const observer = new MutationObserver(() => {
+      if (document.body.classList.contains("page-loading")) {
+        lenis.stop();
+      } else {
+        lenis.start();
+      }
+    });
+
+    observer.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    // Sync with GSAP using gsap.ticker if not mobile
+    let update: ((time: number) => void) | null = null;
+    if (!isMobile) {
+      update = (time: number) => {
+        lenis.raf(time * 1000);
+      };
+      gsap.ticker.add(update);
+    }
+
+    return () => {
+      observer.disconnect();
+      if (update) {
+        gsap.ticker.remove(update);
+      }
+      lenis.start(); // Always restore scrolling on unmount
     };
-
-    gsap.ticker.add(update);
-    return () => gsap.ticker.remove(update);
   }, [lenis, isMobile]);
 
   return null;

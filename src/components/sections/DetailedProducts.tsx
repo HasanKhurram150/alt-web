@@ -6,6 +6,7 @@ import { useTheme } from "@/context/ThemeContext";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePageLoaded } from "@/hooks/usePageLoaded";
 import {
   IoLocationOutline,
   IoTrendingUpOutline,
@@ -46,6 +47,7 @@ export default function DetailedProducts({}: Props) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const containerRef = useRef<HTMLDivElement>(null);
+  const isPageLoaded = usePageLoaded();
 
   const products: Product[] = [
     {
@@ -173,6 +175,8 @@ export default function DetailedProducts({}: Props) {
 
   useGSAP(
     () => {
+      if (!isPageLoaded) return;
+
       // Rule 21: Prefers-reduced-motion check
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
@@ -219,13 +223,14 @@ export default function DetailedProducts({}: Props) {
         }
       });
     },
-    { scope: containerRef },
+    { dependencies: [isPageLoaded], scope: containerRef },
   );
 
   return (
     <div
       ref={containerRef}
       className="w-full flex flex-col gap-16 md:gap-24 lg:gap-32 pb-20 md:pb-32 "
+      style={{ opacity: isPageLoaded ? undefined : 0 }}
     >
       {/* Reusable Icon Gradient Definition matching brand styles */}
       <svg
